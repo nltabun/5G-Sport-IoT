@@ -2,8 +2,9 @@
 
 ## Quick Start
 1. Flash the Pico W with the provided Micropython firmware located fw directory.
-2. Transfer the contents of the src directory to the Pico root dir (/). (With Thonny, for example.)
-3. Create a password.py with the following contents (fill in):
+2. Open up src/config.py and check that MOVESENSE_SERIES is set to your sensors serial
+3. Transfer the contents of the src directory to the Pico root dir (/). (With Thonny, for example.)
+4. Create a password.py with the following contents (fill in):
 ```
 WIFI_SSID = "*"
 WIFI_PASSWORD = "*"
