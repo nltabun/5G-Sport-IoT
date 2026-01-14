@@ -1,11 +1,13 @@
 
 
 import time
+from struct import unpack
+
 import bluetooth
 import uasyncio as asyncio
 from micropython import const
-from struct import unpack
-from data_queue import ecg_queue, imu_queue, hr_queue, state
+
+from data_queue import ecg_queue, hr_queue, imu_queue, state
 
 # --------- Debug control (keep False in production) ----------
 DEBUG = False
@@ -100,14 +102,6 @@ class MovesenseDevice:
             except asyncio.TimeoutError:
                 continue
 
-
-
-
-
-
-
-
-        ###Added by Kamal
     
     def _process_imu_data(self, data):
         sensor_count  = 3 if self.imu_sensor == "IMU9" else 2
@@ -143,16 +137,10 @@ class MovesenseDevice:
             "ArrayGyro": G_obj,
             "ArrayMagn": M_obj
         }
+        
+        _dprint(json_data)
+        
         imu_queue.enqueue(json_data)
-
-    
-    
-    
-    
-    ###############################################################
-        
-        
-        
         
 
     # --------- Robust HR (variable RR count) ----------
@@ -163,15 +151,6 @@ class MovesenseDevice:
             cnt      = len(rr_bytes) // 2
             rr_list  = list(unpack('<' + 'H'*cnt, rr_bytes)) if cnt else []
             
-            ''''
-            json_data = {
-                "Movesense_series": self.ms_series,
-                "Pico_ID": self.picoW_id,
-                "Timestamp_UTC": time.time(),
-                "average": avg_hr,
-                "rrData": rr_list
-            }'''####Commented by Kamal
-            ####Added by Kamal
             json_data = {
                 "Pico_ID": self.picoW_id,
                 "Movesense_series": self.ms_series,
@@ -180,8 +159,8 @@ class MovesenseDevice:
                 "Average_BPM": avg_hr,
                 "rrData": rr_list
             }
-            ###################
             
+            _dprint(json_data)
             
             hr_queue.enqueue(json_data)
         except Exception as e:
@@ -199,6 +178,9 @@ class MovesenseDevice:
             "Timestamp_ms": ts,
             "Samples": samples
         }
+        
+        _dprint(json_data)
+
         ecg_queue.enqueue(json_data)
 
     async def disconnect_ble(self):

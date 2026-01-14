@@ -1,6 +1,4 @@
 
-
-
 import sys
 
 import machine
@@ -31,13 +29,13 @@ async def main():
 
     #sock, uart, _ = await gnss_setup()      # returns immediately
 
-    #cli = await connect_mqtt()
-    #if not cli:
-    #    print("[MAIN] MQTT connect failed; running sensors without publish.")
+    cli = await connect_mqtt()
+    if not cli:
+        print("[MAIN] MQTT connect failed; running sensors without publish.")
 
     tasks = []
-    #if cli:
-    #    tasks.append(asyncio.create_task(supervise("MQTT", publish_to_mqtt, cli)))
+    if cli:
+        tasks.append(asyncio.create_task(supervise("MQTT", publish_to_mqtt, cli)))
     tasks.append(asyncio.create_task(supervise("MOVE", movesense_task, pico)))
     #tasks.append(asyncio.create_task(supervise("GNSS", gnss_task, sock, uart, pico)))
 
