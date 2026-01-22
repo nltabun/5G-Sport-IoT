@@ -36,6 +36,33 @@ def _parse_gpgga(s: str):
         return {"lat": lat, "lon": lon, "fixq": fixq}
     except:
         return None
+    
+def _parse_bestposa(s: str):
+    if not s.startswith("#BESTPOSA"):
+        return None
+    try:
+        if ';' not in s:
+            return None
+        _, payload = s.split(';', 1)
+        p = payload.strip().split(',')
+        if len(p) < 10:
+            return None
+        
+        sol_status = p[0]
+        sol_type = p[1]
+        
+        lat = float(p[2])
+        lon = float(p[3])
+        
+        
+        return {
+            "lat": "{:.11f}".format(lat),
+            "lon": "{:.11f}".format(lon),
+            "sol_status": sol_status,
+            "sol_type": sol_type,
+        }
+    except:
+        return None
 
 async def _connect_ntrip_with_gga(gga_str: str):
     auth = ubinascii.b2a_base64(
@@ -55,6 +82,14 @@ async def _connect_ntrip_with_gga(gga_str: str):
     sock = usocket.socket()
     sock.connect(addr)
     sock.send(req.encode())
+    
+    status = sock.readline()
+    if not status:
+        raise OSError("No response from NTRIP")
+    if(b"200" not in status) and (b"ICY 200" not in status):
+        extra = sock.readline()
+        raise OSError("NTRIP failed: %r %r" % (status, extra))
+    
     while True:
         line = sock.readline()
         if not line or line == b'\r\n':
@@ -75,7 +110,26 @@ async def gnss_task(sock, uart, pico_id):
             # Read UART for GGA
             if uart.any():
                 line = uart.readline()
-                if line and line.startswith(b"$GPGGA"):
+                if line.startswith(b"#BESTPOSA"):
+                    try:
+                        s = line.decode().strip()
+                    except:
+                        s = None
+                    if s:
+                        bp = _parse_bestposa(s)
+                        print(bp)
+                        if bp:
+                            gnss_queue.enqueue({
+                                "Pico_ID": pico_id,
+                                "Timestamp_UTC": time.time(),
+                                "Latitude": bp["lat"],
+                                "Longitude": bp["lon"],
+                                "SolStatus": bp["sol_status"],
+                                "SolType": bp["sol_type"]
+                            })
+                            
+                            
+                if line and (line.startswith(b"$GPGGA") or line.startswith(b"$GNGGA")):
                     s = None
                     try:
                         s = line.decode().strip()
@@ -84,6 +138,7 @@ async def gnss_task(sock, uart, pico_id):
 
                     if s:
                         parsed = _parse_gpgga(s)
+                        print(parsed)
                         if parsed:
                             latest_fix_gga = s
                             gnss_queue.enqueue({
@@ -121,9 +176,13 @@ async def gnss_task(sock, uart, pico_id):
                 try:
                     for _, ev in poller.poll(5):
                         if ev & uselect.POLLIN:
-                            rtcm = sock.recv(512)
-                            if rtcm:
+                            while True:
+                                rtcm = sock.recv(1024)
+                                if not rtcm:
+                                    break
                                 uart.write(rtcm)
+                                if len(rtcm) < 1024:
+                                    break
                 except Exception:
                     # Suppressed RTCM errors
                     connected = False
