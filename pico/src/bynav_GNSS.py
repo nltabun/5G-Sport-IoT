@@ -1,12 +1,19 @@
 
 
 
+import time
+
 # bynav_GNSS.py
-import machine, usocket, uselect, ubinascii, time
+import machine
 import uasyncio as asyncio
-from config import TX_PIN, RX_PIN, UART_BAUD_RATE
-from password import NTRIP_CONFIG
+import ubinascii
+import uselect
+import usocket
+
+from config import RX_PIN, TX_PIN, UART_BAUD_RATE
 from data_queue import gnss_queue
+from password import NTRIP_CONFIG
+
 
 async def gnss_setup():
     """Quick, non-blocking UART init. NTRIP is connected later in gnss_task."""
@@ -121,7 +128,7 @@ async def gnss_task(sock, uart, pico_id):
                         if bp:
                             gnss_queue.enqueue({
                                 "Pico_ID": pico_id,
-                                "Timestamp_UTC": time.time(),
+                                "Timestamp_UTC": time.time_ns(),
                                 "Latitude": bp["lat"],
                                 "Longitude": bp["lon"],
                                 "SolStatus": bp["sol_status"],
