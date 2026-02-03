@@ -1,0 +1,21 @@
+[Unit]
+Description=PostgreSQL Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=mkdir -p /opt/fiveg-sport-backend/pg_data
+ExecStart=/usr/bin/docker run --name %n \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -v /opt/fiveg-sport-backend/pg_data:/var/lib/postgresql \
+    -p 5432:5432 \
+    postgres:latest
+ExecStop=/usr/bin/docker stop %n
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+

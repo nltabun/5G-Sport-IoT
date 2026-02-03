@@ -1,0 +1,12 @@
+[Unit]
+Description=5G Sport Backend Service
+
+[Service]
+ExecStart=/usr/bin/java -jar /opt/fiveg-sport-backend/bin/fiveg-sport-backend
+WorkingDirectory=/opt/fiveg-sport-backend
+Type=simple
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
