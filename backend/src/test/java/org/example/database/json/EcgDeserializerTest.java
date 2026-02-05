@@ -19,7 +19,7 @@ public class EcgDeserializerTest {
 
         assertEquals("e66130100f8c9928", ecg.getPico().getId(), "Pico ID was incorrect");
         assertEquals(174630000192L, ecg.getMovesense().getId(), "Movesense ID was incorrect");
-        assertEquals(30348, ecg.getTimestampUtc(), "UTC timestamp was incorrect");
+        assertEquals(30348L, ecg.getTimestampUtc(), "UTC timestamp was incorrect");
         assertEquals(29889, ecg.getTimestampMs(), "Ms Timestamp was incorrect");
 
         int[] expectedSampleValues = {-62342, -51680, -43311, -35942, -29149, -23343, -18437, -14248, -10712, -7628, -4838, -2323,

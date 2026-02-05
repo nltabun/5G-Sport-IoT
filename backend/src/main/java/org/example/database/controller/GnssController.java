@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/gnss")
@@ -29,7 +30,7 @@ public class GnssController {
     }
 
     @GetMapping("/timestamp")
-    public List<Gnss> getGnssByTimestampUtcBetween(@RequestParam int start, @RequestParam int end) {
+    public List<Gnss> getGnssByTimestampUtcBetween(@RequestParam Long start, @RequestParam Long end) {
         return gnssService.findGnssByTimestampUtcBetween(start, end);
     }
 
@@ -48,8 +49,9 @@ public class GnssController {
             throw new IllegalArgumentException("window must be max 168 / 7 days");
         }
 
-        int end = (int) (System.currentTimeMillis() / 1000L);
-        int start = end - window * 3600;
+        Instant now = Instant.now();
+        Long end = (now.getEpochSecond() * 1_000_000_000L) + now.getNano();
+        Long start = end - (window * 3_600_000_000_000L);
 
         return gnssService.findGnssByTimestampUtcBetween(start, end);
     }

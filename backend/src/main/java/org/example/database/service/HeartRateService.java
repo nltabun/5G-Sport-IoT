@@ -67,7 +67,7 @@ public class HeartRateService {
         return heartRate;
     }
 
-    public List<HeartRate> findHeartRateByTimestampUtcBetween(int start, int end) {
+    public List<HeartRate> findHeartRateByTimestampUtcBetween(Long start, Long end) {
         List<HeartRate> heartRateList = heartRateRepository.findByTimestampUtcBetween(start, end);
         for (HeartRate heartRate : heartRateList) {
             List<RrData> rrData = rrDataRepository.findByHeartRateId(heartRate.getId());

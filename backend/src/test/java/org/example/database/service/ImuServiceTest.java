@@ -129,11 +129,11 @@ public class ImuServiceTest {
         coordinates.add(coordinate1);
         coordinates.add(coordinate2);
 
-        when(imuRepository.findByTimestampUtcBetween(1, 1000)).thenReturn(imuList);
+        when(imuRepository.findByTimestampUtcBetween(1L, 1000L)).thenReturn(imuList);
         when(imuCoordinateRepository.findByImuId(1L)).thenReturn(coordinates);
         when(imuCoordinateRepository.findByImuId(2L)).thenReturn(null);
 
-        List<Imu> foundImuList = imuService.findImuByTimestampUtcBetween(1, 1000);
+        List<Imu> foundImuList = imuService.findImuByTimestampUtcBetween(1L, 1000L);
         assertEquals(foundImuList.get(0).getImuCoordinates(), coordinates, "Incorrect coordinates");
         assertNull(foundImuList.get(1).getImuCoordinates(), "Incorrect coordinates");
     }

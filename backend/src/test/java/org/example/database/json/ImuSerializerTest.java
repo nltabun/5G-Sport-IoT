@@ -34,7 +34,7 @@ public class ImuSerializerTest {
         movesense.setId(174630000192L);
         imu.setMovesense(movesense);
 
-        imu.setTimestampUtc(30348);
+        imu.setTimestampUtc(30348L);
         imu.setTimestampMs(29889);
 
         List<ImuCoordinate> coordinates = new ArrayList<>();

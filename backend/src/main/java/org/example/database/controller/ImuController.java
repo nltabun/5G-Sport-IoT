@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/imu")
@@ -29,12 +30,10 @@ public class ImuController {
     }
 
     @GetMapping("/timestamp")
-    public List<Imu> getImuByTimestampUtcBetween(@RequestParam int start, @RequestParam int end) {
+    public List<Imu> getImuByTimestampUtcBetween(@RequestParam Long start, @RequestParam Long end) {
         return imuService.findImuByTimestampUtcBetween(start, end);
     }
 
-        // Api call /api/gnss/last?window=X
-    // X = requested hours to the past.
     @GetMapping("/last")
     public List<Imu> getLastWindowHours(
             @RequestParam(defaultValue = "1") int window
@@ -48,8 +47,9 @@ public class ImuController {
             throw new IllegalArgumentException("window must be max 168 / 7 days");
         }
 
-        int end = (int) (System.currentTimeMillis() / 1000L);
-        int start = end - window * 3600;
+        Instant now = Instant.now();
+        Long end = (now.getEpochSecond() * 1_000_000_000L) + now.getNano();
+        Long start = end - (window * 3_600_000_000_000L);
 
         return imuService.findImuByTimestampUtcBetween(start, end);
     }

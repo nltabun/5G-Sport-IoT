@@ -24,7 +24,7 @@ public class GnssDeserializer extends JsonDeserializer<Gnss> {
         gnss.setLongitude(gnssNode.get("Longitude").doubleValue());
 
         gnss.setFixQ(gnssNode.path("FixQ").asInt()); // default 0 if missing
-        gnss.setTimestampUtc((int)gnssNode.path("Timestamp_UTC").asLong(0)); // handles seconds as number
+        gnss.setTimestampUtc(gnssNode.path("Timestamp_UTC").asLong(0)); // handles seconds as number
         gnss.setTimestampMs((int)gnssNode.path("Timestamp_ms").asLong(0));  // default 0 if missing
 
         return gnss;

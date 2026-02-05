@@ -35,7 +35,7 @@ public class HeartRateSerializerTest {
         heartRate.setMovesense(movesense);
 
         heartRate.setAverageBpm(108.7813);
-        heartRate.setTimestampUtc(30348);
+        heartRate.setTimestampUtc(30348L);
         heartRate.setTimestampMs(29889);
 
         List<RrData> rrData = new ArrayList<>();

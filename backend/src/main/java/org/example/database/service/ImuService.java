@@ -67,7 +67,7 @@ public class ImuService {
         return imu;
     }
 
-    public List<Imu> findImuByTimestampUtcBetween(int start, int end) {
+    public List<Imu> findImuByTimestampUtcBetween(Long start, Long end) {
         List<Imu> imuList = imuRepository.findByTimestampUtcBetween(start, end);
         for (Imu imu : imuList) {
             List<ImuCoordinate> coordinates = imuCoordinateRepository.findByImuId(imu.getId());

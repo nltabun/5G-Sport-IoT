@@ -23,7 +23,7 @@ public class Gnss {
     private int fixQ;
 
     @Column(name = "timestamp_utc")
-    private int timestampUtc;
+    private Long timestampUtc;
 
     @Column(name = "timestamp_ms")
     private int timestampMs;
@@ -58,11 +58,11 @@ public class Gnss {
         this.fixQ = fixQ;
     }
 
-    public int getTimestampUtc() {
+    public Long getTimestampUtc() {
         return timestampUtc;
     }
 
-    public void setTimestampUtc(int timestampUtc) {
+    public void setTimestampUtc(Long timestampUtc) {
         this.timestampUtc = timestampUtc;
     }
 

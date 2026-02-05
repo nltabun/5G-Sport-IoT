@@ -37,7 +37,7 @@ public class EcgSerializerTest {
         movesense.setId(174630000192L);
         ecg.setMovesense(movesense);
 
-        ecg.setTimestampUtc(30348);
+        ecg.setTimestampUtc(30348L);
         ecg.setTimestampMs(29889);
 
         List<EcgSample> samples = new ArrayList<>();
