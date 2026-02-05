@@ -13,7 +13,7 @@ CREATE TABLE movesense
 CREATE TABLE imu
 (
   id INT GENERATED ALWAYS AS IDENTITY,
-  timestamp_utc INT NOT NULL,
+  timestamp_utc BIGINT NOT NULL,
   timestamp_ms INT NOT NULL,
   pico_id VARCHAR(255) NOT NULL,
   movesense_id BIGINT NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE heart_rate
 (
   id INT GENERATED ALWAYS AS IDENTITY,
   average_bpm FLOAT NOT NULL,
-  timestamp_utc INT NOT NULL,
+  timestamp_utc BIGINT NOT NULL,
   timestamp_ms INT NOT NULL,
   pico_id VARCHAR(255) NOT NULL,
   movesense_id BIGINT NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE heart_rate
 CREATE TABLE ecg
 (
   id INT GENERATED ALWAYS AS IDENTITY,
-  timestamp_utc INT NOT NULL,
+  timestamp_utc BIGINT NOT NULL,
   timestamp_ms INT NOT NULL,
   pico_id VARCHAR(255) NOT NULL,
   movesense_id BIGINT NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE gnss
   id INT GENERATED ALWAYS AS IDENTITY,
   latitude FLOAT NOT NULL,
   longitude FLOAT NOT NULL,
-  timestamp_utc INT NOT NULL,
+  timestamp_utc BIGINT NOT NULL,
   timestamp_ms INT NOT NULL,
   fix_q INT NOT NULL,
   pico_id VARCHAR(255) NOT NULL,
