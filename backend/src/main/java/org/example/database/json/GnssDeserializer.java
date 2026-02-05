@@ -22,9 +22,10 @@ public class GnssDeserializer extends JsonDeserializer<Gnss> {
         gnss.setPico(pico);
         gnss.setLatitude(gnssNode.get("Latitude").doubleValue());
         gnss.setLongitude(gnssNode.get("Longitude").doubleValue());
-        gnss.setFixQ(gnssNode.get("FixQ").intValue());
-        gnss.setTimestampUtc(gnssNode.get("Timestamp_UTC").longValue());
-        gnss.setTimestampMs(gnssNode.get("Timestamp_ms").intValue());
+
+        gnss.setFixQ(gnssNode.path("FixQ").asInt()); // default 0 if missing
+        gnss.setTimestampUtc(gnssNode.path("Timestamp_UTC").asLong(0)); // handles seconds as number
+        gnss.setTimestampMs((int)gnssNode.path("Timestamp_ms").asLong(0));  // default 0 if missing
 
         return gnss;
     }

@@ -5,9 +5,8 @@ from struct import unpack
 
 import bluetooth
 import uasyncio as asyncio
-from micropython import const
-
 from data_queue import ecg_queue, hr_queue, imu_queue, state
+from micropython import const
 
 # --------- Debug control (keep False in production) ----------
 DEBUG = False
@@ -131,7 +130,8 @@ class MovesenseDevice:
         json_data = {
             "Pico_ID": self.picoW_id,
             "Movesense_series": self.ms_series,
-            "Timestamp_UTC": time.time_ns(),
+            #"Timestamp_UTC": time.time_ns(),
+            "Timestamp_UTC": time.time(),
             "Timestamp_ms": ts,
             "ArrayAcc": A_obj,
             "ArrayGyro": G_obj,
@@ -154,7 +154,8 @@ class MovesenseDevice:
             json_data = {
                 "Pico_ID": self.picoW_id,
                 "Movesense_series": self.ms_series,
-                "Timestamp_UTC": time.time_ns(),
+                #"Timestamp_UTC": time.time_ns(),
+                "Timestamp_UTC": time.time(),
                 "Timestamp_ms": time.ticks_ms() if 'time' in dir(time) else 0,  # optional: add if you want like sample
                 "Average_BPM": avg_hr,
                 "rrData": rr_list
@@ -174,7 +175,8 @@ class MovesenseDevice:
         json_data = {
             "Movesense_series": self.ms_series,
             "Pico_ID": self.picoW_id,
-            "Timestamp_UTC": time.time_ns(),
+            #"Timestamp_UTC": time.time_ns(),
+            "Timestamp_UTC": time.time(),
             "Timestamp_ms": ts,
             "Samples": samples
         }

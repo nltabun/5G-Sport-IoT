@@ -128,7 +128,8 @@ async def gnss_task(sock, uart, pico_id):
                         if bp:
                             gnss_queue.enqueue({
                                 "Pico_ID": pico_id,
-                                "Timestamp_UTC": time.time_ns(),
+                                #"Timestamp_UTC": time.time_ns(),
+                                "Timestamp_UTC": time.time(),
                                 "Latitude": bp["lat"],
                                 "Longitude": bp["lon"],
                                 "SolStatus": bp["sol_status"],
