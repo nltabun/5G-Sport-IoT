@@ -27,7 +27,7 @@ public class EcgDeserializer extends JsonDeserializer<Ecg> {
         ecg.setPico(pico);
 
         Movesense movesense = new Movesense();
-        movesense.setId(node.get("Movesense_series").longValue());
+        movesense.setId(node.get("Movesense_series").asLong(0));
         ecg.setMovesense(movesense);
 
         Iterator<JsonNode> samples = node.get("Samples").values();

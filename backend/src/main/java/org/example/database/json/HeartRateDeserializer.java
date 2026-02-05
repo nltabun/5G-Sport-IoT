@@ -25,7 +25,7 @@ public class HeartRateDeserializer extends JsonDeserializer<HeartRate> {
         heartRate.setPico(pico);
 
         Movesense movesense = new Movesense();
-        movesense.setId(node.get("Movesense_series").longValue());
+        movesense.setId(node.get("Movesense_series").asLong(0));
         heartRate.setMovesense(movesense);
 
         Iterator<JsonNode> rrDataList = node.get("rrData").values();

@@ -27,8 +27,7 @@ public class ImuDeserializer extends JsonDeserializer<Imu> {
         imu.setPico(pico);
 
         Movesense movesense = new Movesense();
-        movesense.setId(node.get("Movesense_series").longValue());
-        System.out.println(node.get("Movesense_series").longValue());
+        movesense.setId(node.get("Movesense_series").asLong(0));
         imu.setMovesense(movesense);
 
         Iterator<JsonNode> ArrayAcc = node.get("ArrayAcc").values();

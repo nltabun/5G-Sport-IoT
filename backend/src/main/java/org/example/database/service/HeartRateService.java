@@ -52,7 +52,6 @@ public class HeartRateService {
     public List<HeartRate> findAllHeartRates() {
         List<HeartRate> heartRates = (List<HeartRate>) heartRateRepository.findAll();
         for (HeartRate heartRate : heartRates) {
-            LOGGER.info("Heart rate = '{}'", heartRate);
             List<RrData> rrData = rrDataRepository.findByHeartRateId(heartRate.getId());
             heartRate.setRrData(rrData);
         }

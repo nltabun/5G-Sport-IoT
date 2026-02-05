@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/heartrate")
@@ -36,8 +37,6 @@ public class HeartRateController {
         return heartRateService.findHeartRateByTimestampUtcBetween(start, end);
     }
 
-    // Api call /api/heartrate/last?window=X
-    // X = requested hours to the past.
     @GetMapping("/last")
     public List<HeartRate> getLastWindowHours(
             @RequestParam(defaultValue = "1") int window
@@ -51,8 +50,9 @@ public class HeartRateController {
             throw new IllegalArgumentException("window must be max 168 / 7 days");
         }
 
-        Long end = System.nanoTime();
-        Long start = end - (window * 3600 * 1000000000L);
+        Instant now = Instant.now();
+        Long end = (now.getEpochSecond() * 1_000_000_000L) + now.getNano();
+        Long start = end - (window * 3_600_000_000_000L);
 
         return heartRateService.findHeartRateByTimestampUtcBetween(start, end);
     }
