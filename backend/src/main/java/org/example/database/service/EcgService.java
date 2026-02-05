@@ -67,7 +67,7 @@ public class EcgService {
         return ecg;
     }
 
-    public List<Ecg> findEcgByTimestampUtcBetween(int start, int end) {
+    public List<Ecg> findEcgByTimestampUtcBetween(Long start, Long end) {
         List<Ecg> ecgList = ecgRepository.findByTimestampUtcBetween(start, end);
         for (Ecg ecg : ecgList) {
             List<EcgSample> samples = ecgSampleRepository.findByEcgId(ecg.getId());

@@ -129,11 +129,11 @@ public class HeartRateServiceTest {
         dataList.add(data1);
         dataList.add(data2);
 
-        when(heartRateRepository.findByTimestampUtcBetween(1, 1000)).thenReturn(heartRates);
+        when(heartRateRepository.findByTimestampUtcBetween(1L, 1000L)).thenReturn(heartRates);
         when(rrDataRepository.findByHeartRateId(1L)).thenReturn(dataList);
         when(rrDataRepository.findByHeartRateId(2L)).thenReturn(null);
 
-        List<HeartRate> foundHeartRates = heartRateService.findHeartRateByTimestampUtcBetween(1, 1000);
+        List<HeartRate> foundHeartRates = heartRateService.findHeartRateByTimestampUtcBetween(1L, 1000L);
         assertEquals(foundHeartRates.get(0).getRrData(), dataList, "Incorrect RR data");
         assertNull(foundHeartRates.get(1).getRrData(), "Incorrect RR data");
     }

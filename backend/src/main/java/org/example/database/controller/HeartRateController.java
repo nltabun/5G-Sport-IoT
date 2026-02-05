@@ -25,16 +25,18 @@ public class HeartRateController {
     }
 
     @GetMapping("/{id}")
-    public HeartRate getHeartRateById(@PathVariable Long id){
+    public HeartRate getHeartRateById(@PathVariable long id){
+        System.out.println(id);
+        System.out.println(heartRateService.findHeartRateById(id));
         return heartRateService.findHeartRateById(id);
     }
 
     @GetMapping("/timestamp")
-    public List<HeartRate> getHeartRatesByTimestampUtcBetween(@RequestParam int start, @RequestParam int end) {
+    public List<HeartRate> getHeartRatesByTimestampUtcBetween(@RequestParam long start, @RequestParam long end) {
         return heartRateService.findHeartRateByTimestampUtcBetween(start, end);
     }
 
-        // Api call /api/gnss/last?window=X
+    // Api call /api/heartrate/last?window=X
     // X = requested hours to the past.
     @GetMapping("/last")
     public List<HeartRate> getLastWindowHours(
@@ -49,8 +51,8 @@ public class HeartRateController {
             throw new IllegalArgumentException("window must be max 168 / 7 days");
         }
 
-        int end = (int) (System.currentTimeMillis() / 1000L);
-        int start = end - window * 3600;
+        Long end = System.nanoTime();
+        Long start = end - (window * 3600 * 1000000000L);
 
         return heartRateService.findHeartRateByTimestampUtcBetween(start, end);
     }

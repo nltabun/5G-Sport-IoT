@@ -128,11 +128,11 @@ public class EcgServiceTest {
         samples.add(sample1);
         samples.add(sample2);
 
-        when(ecgRepository.findByTimestampUtcBetween(1, 1000)).thenReturn(ecgList);
+        when(ecgRepository.findByTimestampUtcBetween(1L, 1000L)).thenReturn(ecgList);
         when(ecgSampleRepository.findByEcgId(1L)).thenReturn(samples);
         when(ecgSampleRepository.findByEcgId(2L)).thenReturn(null);
 
-        List<Ecg> foundEcgList = ecgService.findEcgByTimestampUtcBetween(1, 1000);
+        List<Ecg> foundEcgList = ecgService.findEcgByTimestampUtcBetween(1L, 1000L);
         assertEquals(foundEcgList.get(0).getEcgSamples(), samples, "Incorrect EcgSamples");
         assertNull(foundEcgList.get(1).getEcgSamples(), "Incorrect EcgSamples");
     }

@@ -29,7 +29,7 @@ public class EcgController {
     }
 
     @GetMapping("/timestamp")
-    public List<Ecg> getEcgByTimestampUtcBetween(@RequestParam int start, @RequestParam int end) {
+    public List<Ecg> getEcgByTimestampUtcBetween(@RequestParam Long start, @RequestParam Long end) {
         return ecgService.findEcgByTimestampUtcBetween(start, end);
     }
 
@@ -48,8 +48,8 @@ public class EcgController {
             throw new IllegalArgumentException("window must be max 168 / 7 days");
         }
 
-        int end = (int) (System.currentTimeMillis() / 1000L);
-        int start = end - window * 3600;
+        Long end = System.nanoTime();
+        Long start = end - (window * 3600 * 1000000000L);
 
         return ecgService.findEcgByTimestampUtcBetween(start, end);
     }

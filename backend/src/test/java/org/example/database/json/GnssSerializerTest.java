@@ -33,7 +33,7 @@ public class GnssSerializerTest {
         gnss.setLatitude(37.7749);
         gnss.setLongitude(-122.4194);
         gnss.setFixQ(1);
-        gnss.setTimestampUtc(30348);
+        gnss.setTimestampUtc(30348L);
         gnss.setTimestampMs(29889);
 
         return gnss;

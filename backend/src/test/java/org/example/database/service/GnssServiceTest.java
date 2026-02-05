@@ -66,7 +66,7 @@ public class GnssServiceTest {
 
     @Test
     public void findGnssByTimestampUtcBetweenTest() {
-        gnssService.findGnssByTimestampUtcBetween(1, 2);
-        verify(gnssRepository, times(1)).findByTimestampUtcBetween(1, 2);
+        gnssService.findGnssByTimestampUtcBetween(1L, 2L);
+        verify(gnssRepository, times(1)).findByTimestampUtcBetween(1L, 2L);
     }
 }

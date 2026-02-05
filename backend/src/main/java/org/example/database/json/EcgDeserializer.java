@@ -19,7 +19,7 @@ public class EcgDeserializer extends JsonDeserializer<Ecg> {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
         Ecg ecg = new Ecg();
-        ecg.setTimestampUtc(node.get("Timestamp_UTC").intValue());
+        ecg.setTimestampUtc(node.get("Timestamp_UTC").longValue());
         ecg.setTimestampMs(node.get("Timestamp_ms").intValue());
 
         Pico pico = new Pico();

@@ -29,7 +29,7 @@ public class GnssController {
     }
 
     @GetMapping("/timestamp")
-    public List<Gnss> getGnssByTimestampUtcBetween(@RequestParam int start, @RequestParam int end) {
+    public List<Gnss> getGnssByTimestampUtcBetween(@RequestParam Long start, @RequestParam Long end) {
         return gnssService.findGnssByTimestampUtcBetween(start, end);
     }
 
@@ -48,8 +48,8 @@ public class GnssController {
             throw new IllegalArgumentException("window must be max 168 / 7 days");
         }
 
-        int end = (int) (System.currentTimeMillis() / 1000L);
-        int start = end - window * 3600;
+        Long end = System.nanoTime();
+        Long start = end - (window * 3600 * 1000000000L);
 
         return gnssService.findGnssByTimestampUtcBetween(start, end);
     }

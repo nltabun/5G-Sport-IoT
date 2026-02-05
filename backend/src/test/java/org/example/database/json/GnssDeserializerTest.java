@@ -20,7 +20,7 @@ public class GnssDeserializerTest {
         assertEquals(37.7749, gnss.getLatitude(), "Incorrect latitude");
         assertEquals(-122.4194, gnss.getLongitude(), "Incorrect longitude");
         assertEquals(1, gnss.getFixQ(), "Incorrect FixQ");
-        assertEquals(30348, gnss.getTimestampUtc(), "Incorrect UTC timestamp");
+        assertEquals(30348L, gnss.getTimestampUtc(), "Incorrect UTC timestamp");
         assertEquals(29889, gnss.getTimestampMs(), "Incorrect ms timestamp");
     }
 }
