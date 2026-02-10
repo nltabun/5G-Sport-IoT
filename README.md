@@ -86,7 +86,7 @@ CREATE DATABASE sensor_data;
 
 ## Kafka Broker
 ### Requirements
-- Docker (recommended)
+- Docker (recommended)   
 OR
 - Kafka (installed natively)
 
