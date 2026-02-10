@@ -8,6 +8,7 @@ from bynav_GNSS import gnss_setup, gnss_task
 from movesense_controller import movesense_task
 from mqtt import connect_mqtt, publish_to_mqtt
 from wifi_connection import connect_wifi
+from ntp import ntp_sync
 
 
 async def supervise(name, fn, *args):
@@ -19,12 +20,17 @@ async def supervise(name, fn, *args):
             sys.print_exception(e)
             await asyncio.sleep(1)
 
+
 async def main():
     pico = machine.unique_id().hex()
     print("=== PicoW ID:", pico, "===")
 
     if not await connect_wifi():
         print("[MAIN] No Wi-Fi; stopping.")
+        return
+
+    if not await ntp_sync():
+        print("[MAIN] NTP sync failed; stopping.")
         return
 
     #sock, uart, _ = await gnss_setup()      # returns immediately
