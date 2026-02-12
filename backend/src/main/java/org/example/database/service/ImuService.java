@@ -82,8 +82,8 @@ public class ImuService {
     }
 
     private void saveIMUCoordinates(List<ImuCoordinate> coordinates) {
-        imuCoordinateRepository.saveAll(coordinate);
-        LOGGER.info("Saved {} IMU samples", coordinate.size());
+        imuCoordinateRepository.saveAll(coordinates);
+        LOGGER.info("Saved {} IMU samples", coordinates.size());
         // for (ImuCoordinate coordinate : coordinates) {
         //     imuCoordinateRepository.save(coordinate);
         //     LOGGER.info("IMU coordinate saved to database = '{}'", coordinate);

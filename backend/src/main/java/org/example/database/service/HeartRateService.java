@@ -77,15 +77,15 @@ public class HeartRateService {
     }
 
     private void saveHeartRateData(HeartRate heartRate) {
-        heartRateRepository.saveAll(heartRate);
-        LOGGER.info("Saved {} HR samples", heartRate.size());
+        heartRateRepository.save(heartRate);
+        LOGGER.info("Saved {} HR samples", heartRate);
         // heartRateRepository.save(heartRate);
         // LOGGER.info("Heart rate data saved to database = '{}'", heartRate);
     }
 
     private void saveRrData(List<RrData> rrDataArray) {
-        rrDataRepository.saveAll(rrData);
-        LOGGER.info("Saved {} RR samples", rrData.size());
+        rrDataRepository.saveAll(rrDataArray);
+        LOGGER.info("Saved {} RR samples", rrDataArray.size());
         // for (RrData rrData : rrDataArray) {
         //     rrDataRepository.save(rrData);
         //     LOGGER.info("rr data saved to database = '{}'", rrData);
