@@ -9,7 +9,6 @@ import uasyncio as asyncio
 import ubinascii
 import uselect
 import usocket
-
 from config import RX_PIN, TX_PIN, UART_BAUD_RATE
 from data_queue import gnss_queue
 from password import NTRIP_CONFIG
@@ -150,7 +149,7 @@ async def gnss_task(sock, uart, pico_id):
                             latest_fix_gga = s
                             gnss_queue.enqueue({
                                 "Pico_ID": pico_id,
-                                "Timestamp_UTC": time.time(),
+                                "Timestamp_UTC": time.time_ns(),
                                 "Latitude": parsed["lat"],
                                 "Longitude": parsed["lon"],
                                 "FixQ": parsed["fixq"],

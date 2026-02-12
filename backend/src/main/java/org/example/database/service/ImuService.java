@@ -67,7 +67,7 @@ public class ImuService {
         return imu;
     }
 
-    public List<Imu> findImuByTimestampUtcBetween(int start, int end) {
+    public List<Imu> findImuByTimestampUtcBetween(Long start, Long end) {
         List<Imu> imuList = imuRepository.findByTimestampUtcBetween(start, end);
         for (Imu imu : imuList) {
             List<ImuCoordinate> coordinates = imuCoordinateRepository.findByImuId(imu.getId());
@@ -82,11 +82,9 @@ public class ImuService {
     }
 
     private void saveIMUCoordinates(List<ImuCoordinate> coordinates) {
-        imuCoordinateRepository.saveAll(coordinates);
-        LOGGER.info("Saved {} IMU samples", coordinates.size());
-        // for (ImuCoordinate coordinate : coordinates) {
-        //     imuCoordinateRepository.save(coordinate);
-        //     LOGGER.info("IMU coordinate saved to database = '{}'", coordinate);
-        // }
+        for (ImuCoordinate coordinate : coordinates) {
+            imuCoordinateRepository.save(coordinate);
+            LOGGER.info("IMU coordinate saved to database = '{}'", coordinate);
+        }
     }
 }

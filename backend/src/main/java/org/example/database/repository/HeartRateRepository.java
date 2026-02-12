@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface HeartRateRepository extends CrudRepository<HeartRate, Long> {
     HeartRate findById(long id);
-    List<HeartRate> findByTimestampUtcBetween(int start, int end);
+    List<HeartRate> findByTimestampUtcBetween(Long start, Long end);
 }

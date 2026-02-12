@@ -37,14 +37,14 @@ public class ImuRepositoryTest {
         movesenseRepository.save(movesense);
 
         Imu imu1 = new Imu();
-        imu1.setTimestampUtc(29889);
+        imu1.setTimestampUtc(29889L);
         imu1.setTimestampMs(29889);
         imu1.setPico(pico);
         imu1.setMovesense(movesense);
         imuRepository.save(imu1);
 
         Imu imu2 = new Imu();
-        imu2.setTimestampUtc(30348);
+        imu2.setTimestampUtc(30348L);
         imu2.setTimestampMs(30348);
         imu2.setPico(pico);
         imu2.setMovesense(movesense);
@@ -59,10 +59,10 @@ public class ImuRepositoryTest {
 
         assertEquals("e66130100f8c9928", imu1.getPico().getId(), "Incorrect picoId");
         assertEquals(174630000192L, imu1.getMovesense().getId(), "Incorrect movesenseId");
-        assertEquals(29889, imu1.getTimestampUtc(), "Incorrect timestampUtc");
+        assertEquals(29889L, imu1.getTimestampUtc(), "Incorrect timestampUtc");
         assertEquals(29889, imu1.getTimestampMs(), "Incorrect timestampMs");
 
-        assertEquals(30348, imu2.getTimestampUtc(), "Incorrect timestampUtc");
+        assertEquals(30348L, imu2.getTimestampUtc(), "Incorrect timestampUtc");
 
         assertNull(imu3, "IMU with id 3 should not exist");
     }
@@ -71,16 +71,16 @@ public class ImuRepositoryTest {
     public void findByTimestampUtcBetweenTest() {
         List<Imu> imuList;
 
-        imuList = imuRepository.findByTimestampUtcBetween(29890, 30347);
+        imuList = imuRepository.findByTimestampUtcBetween(29890L, 30347L);
         assertEquals(0, imuList.size(), "Incorrect amount of IMU objects was found");
 
-        imuList = imuRepository.findByTimestampUtcBetween(29889, 30347);
+        imuList = imuRepository.findByTimestampUtcBetween(29889L, 30347L);
         assertEquals(1, imuList.size(), "Incorrect amount of IMU objects was found");
 
-        imuList = imuRepository.findByTimestampUtcBetween(29890, 30348);
+        imuList = imuRepository.findByTimestampUtcBetween(29890L, 30348L);
         assertEquals(1, imuList.size(), "Incorrect amount of IMU objects was found");
 
-        imuList = imuRepository.findByTimestampUtcBetween(29889, 30348);
+        imuList = imuRepository.findByTimestampUtcBetween(29889L, 30348L);
         assertEquals(2, imuList.size(), "Incorrect amount of IMU objects was found");
     }
 }

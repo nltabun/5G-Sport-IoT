@@ -42,14 +42,12 @@ public class GnssService {
         return gnssRepository.findById(id);
     }
 
-    public List<Gnss> findGnssByTimestampUtcBetween(int start, int end) {
+    public List<Gnss> findGnssByTimestampUtcBetween(Long start, Long end) {
         return gnssRepository.findByTimestampUtcBetween(start, end);
     }
 
     private void saveGnssData(Gnss gnss) {
         gnssRepository.save(gnss);
-        LOGGER.info("Saved {} GNSS samples", gnss);
-        // gnssRepository.save(gnss);
-        // LOGGER.info("GNSS data saved to database = '{}'", gnss);
+        LOGGER.info("GNSS data saved to database = '{}'", gnss);
     }
 }

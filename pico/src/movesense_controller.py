@@ -8,7 +8,7 @@ from config import MOVESENSE_SERIES
 
 SCAN_MS = 8000
 RESCAN_DELAY_MS = 1200
-IMU_RATE = 26
+IMU_RATE = 13
 ECG_RATE = 125
 
 async def _find(ms_series):

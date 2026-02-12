@@ -20,7 +20,7 @@ public class HeartRateDeserializerTest {
         assertEquals("e66130100f8c9928", heartRate.getPico().getId(), "Pico ID was incorrect");
         assertEquals(174630000192L, heartRate.getMovesense().getId(), "Movesense ID was incorrect");
         assertEquals(108.7813, heartRate.getAverageBpm(), "Average BPM was incorrect");
-        assertEquals(30348, heartRate.getTimestampUtc(), "UTC timestamp was incorrect");
+        assertEquals(30348L, heartRate.getTimestampUtc(), "UTC timestamp was incorrect");
         assertEquals(29889, heartRate.getTimestampMs(), "Ms Timestamp was incorrect");
 
         int[] expectedRrDataValues = {384};

@@ -32,7 +32,7 @@ public class GnssRepositoryTest {
         gnss1.setLatitude(37.7749);
         gnss1.setLongitude(-122.4194);
         gnss1.setFixQ(1);
-        gnss1.setTimestampUtc(29889);
+        gnss1.setTimestampUtc(29889L);
         gnss1.setTimestampMs(29889);
         gnss1.setPico(pico);
         gnssRepository.save(gnss1);
@@ -41,7 +41,7 @@ public class GnssRepositoryTest {
         gnss2.setLatitude(-122.4194);
         gnss2.setLongitude(37.7749);
         gnss2.setFixQ(1);
-        gnss2.setTimestampUtc(30348);
+        gnss2.setTimestampUtc(30348L);
         gnss2.setTimestampMs(30348);
         gnss2.setPico(pico);
         gnssRepository.save(gnss2);
@@ -57,7 +57,7 @@ public class GnssRepositoryTest {
         assertEquals(37.7749, gnss1.getLatitude(), "Incorrect latitude");
         assertEquals(-122.4194, gnss1.getLongitude(), "Incorrect longitude");
         assertEquals(1, gnss1.getFixQ(), "Incorrect FixQ");
-        assertEquals(29889, gnss1.getTimestampUtc(), "Incorrect timestampUtc");
+        assertEquals(29889L, gnss1.getTimestampUtc(), "Incorrect timestampUtc");
         assertEquals(29889, gnss1.getTimestampMs(), "Incorrect timestampMs");
 
         assertEquals(-122.4194, gnss2.getLatitude(), "Incorrect latitude");
@@ -69,16 +69,16 @@ public class GnssRepositoryTest {
     public void findByTimestampUtcBetweenTest() {
         List<Gnss> gnssList;
 
-        gnssList = gnssRepository.findByTimestampUtcBetween(29890, 30347);
+        gnssList = gnssRepository.findByTimestampUtcBetween(29890L, 30347L);
         assertEquals(0, gnssList.size(), "Incorrect amount of GNSS objects was found");
 
-        gnssList = gnssRepository.findByTimestampUtcBetween(29889, 30347);
+        gnssList = gnssRepository.findByTimestampUtcBetween(29889L, 30347L);
         assertEquals(1, gnssList.size(), "Incorrect amount of GNSS objects was found");
 
-        gnssList = gnssRepository.findByTimestampUtcBetween(29890, 30348);
+        gnssList = gnssRepository.findByTimestampUtcBetween(29890L, 30348L);
         assertEquals(1, gnssList.size(), "Incorrect amount of GNSS objects was found");
 
-        gnssList = gnssRepository.findByTimestampUtcBetween(29889, 30348);
+        gnssList = gnssRepository.findByTimestampUtcBetween(29889L, 30348L);
         assertEquals(2, gnssList.size(), "Incorrect amount of GNSS objects was found");
     }
 }

@@ -9,7 +9,3 @@ spring.datasource.username=postgres
 spring.datasource.password=mysecretpassword
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 database.enabled=true
-
-spring.jpa.properties.hibernate.jdbc.batch_size=100
-spring.jpa.properties.hibernate.order_inserts=true
-spring.jpa.properties.hibernate.order_updates=true

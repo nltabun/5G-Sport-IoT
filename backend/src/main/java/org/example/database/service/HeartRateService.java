@@ -67,7 +67,7 @@ public class HeartRateService {
         return heartRate;
     }
 
-    public List<HeartRate> findHeartRateByTimestampUtcBetween(int start, int end) {
+    public List<HeartRate> findHeartRateByTimestampUtcBetween(Long start, Long end) {
         List<HeartRate> heartRateList = heartRateRepository.findByTimestampUtcBetween(start, end);
         for (HeartRate heartRate : heartRateList) {
             List<RrData> rrData = rrDataRepository.findByHeartRateId(heartRate.getId());
@@ -78,17 +78,13 @@ public class HeartRateService {
 
     private void saveHeartRateData(HeartRate heartRate) {
         heartRateRepository.save(heartRate);
-        LOGGER.info("Saved {} HR samples", heartRate);
-        // heartRateRepository.save(heartRate);
-        // LOGGER.info("Heart rate data saved to database = '{}'", heartRate);
+        LOGGER.info("Heart rate data saved to database = '{}'", heartRate);
     }
 
     private void saveRrData(List<RrData> rrDataArray) {
-        rrDataRepository.saveAll(rrDataArray);
-        LOGGER.info("Saved {} RR samples", rrDataArray.size());
-        // for (RrData rrData : rrDataArray) {
-        //     rrDataRepository.save(rrData);
-        //     LOGGER.info("rr data saved to database = '{}'", rrData);
-        // }
+        for (RrData rrData : rrDataArray) {
+            rrDataRepository.save(rrData);
+            LOGGER.info("rr data saved to database = '{}'", rrData);
+        }
     }
 }

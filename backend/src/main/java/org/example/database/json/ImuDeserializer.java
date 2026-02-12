@@ -19,7 +19,7 @@ public class ImuDeserializer extends JsonDeserializer<Imu> {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
         Imu imu = new Imu();
-        imu.setTimestampUtc(node.get("Timestamp_UTC").intValue());
+        imu.setTimestampUtc(node.get("Timestamp_UTC").longValue());
         imu.setTimestampMs(node.get("Timestamp_ms").intValue());
 
         Pico pico = new Pico();
@@ -27,7 +27,7 @@ public class ImuDeserializer extends JsonDeserializer<Imu> {
         imu.setPico(pico);
 
         Movesense movesense = new Movesense();
-        movesense.setId(node.get("Movesense_series").longValue());
+        movesense.setId(node.get("Movesense_series").asLong(0));
         imu.setMovesense(movesense);
 
         Iterator<JsonNode> ArrayAcc = node.get("ArrayAcc").values();

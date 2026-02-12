@@ -18,7 +18,7 @@ public class ImuDeserializerTest {
 
         assertEquals("e66130100f8c9928", imu.getPico().getId(), "Pico ID was incorrect");
         assertEquals(174630000192L, imu.getMovesense().getId(), "Movesense ID was incorrect");
-        assertEquals(30348, imu.getTimestampUtc(), "UTC timestamp was incorrect");
+        assertEquals(30348L, imu.getTimestampUtc(), "UTC timestamp was incorrect");
         assertEquals(29889, imu.getTimestampMs(), "Ms Timestamp was incorrect");
 
         assertCoordinate(imu, 0, "acc", 8.198, -5.47, 1.235);

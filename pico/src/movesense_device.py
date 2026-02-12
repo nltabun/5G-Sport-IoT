@@ -5,9 +5,8 @@ from struct import unpack
 
 import bluetooth
 import uasyncio as asyncio
-from micropython import const
-
 from data_queue import ecg_queue, hr_queue, imu_queue, state
+from micropython import const
 
 # --------- Debug control (keep False in production) ----------
 DEBUG = False

@@ -20,8 +20,6 @@ public class PicoService {
 
     public void save(Pico pico) {
         picoRepository.save(pico);
-        LOGGER.info("Saved {} Pico samples", pico);
-        // picoRepository.save(pico);
-        // LOGGER.info("Raspberry Pi Pico saved to database = '{}'", pico.getId());
+        LOGGER.info("Raspberry Pi Pico saved to database = '{}'", pico.getId());
     }
 }

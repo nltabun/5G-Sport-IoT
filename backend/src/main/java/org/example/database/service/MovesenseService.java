@@ -20,8 +20,6 @@ public class MovesenseService {
 
     public void save(Movesense movesense) {
         movesenseRepository.save(movesense);
-        LOGGER.info("Saved {} MOVESENSE samples", movesense);
-        // movesenseRepository.save(movesense);
-        // LOGGER.info("Movesense saved to database = '{}'", movesense.getId());
+        LOGGER.info("Movesense saved to database = '{}'", movesense.getId());
     }
 }

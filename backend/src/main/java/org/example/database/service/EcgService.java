@@ -67,7 +67,7 @@ public class EcgService {
         return ecg;
     }
 
-    public List<Ecg> findEcgByTimestampUtcBetween(int start, int end) {
+    public List<Ecg> findEcgByTimestampUtcBetween(Long start, Long end) {
         List<Ecg> ecgList = ecgRepository.findByTimestampUtcBetween(start, end);
         for (Ecg ecg : ecgList) {
             List<EcgSample> samples = ecgSampleRepository.findByEcgId(ecg.getId());
@@ -82,11 +82,9 @@ public class EcgService {
     }
 
     public void saveEcgSamples(List<EcgSample> samples) {
-        ecgSampleRepository.saveAll(samples);
-        LOGGER.info("Saved {} ECG samples", samples.size());
-        // for (EcgSample sample : samples) {
-        //     ecgSampleRepository.save(sample);
-        //     LOGGER.info("ECG sample saved to database = '{}'", sample);
-        // }
+        for (EcgSample sample : samples) {
+            ecgSampleRepository.save(sample);
+            LOGGER.info("ECG sample saved to database = '{}'", sample);
+        }
     }
 }

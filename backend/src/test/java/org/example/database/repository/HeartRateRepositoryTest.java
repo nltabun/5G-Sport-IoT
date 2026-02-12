@@ -38,7 +38,7 @@ public class HeartRateRepositoryTest {
 
         HeartRate heartRate1 = new HeartRate();
         heartRate1.setAverageBpm(108.7813);
-        heartRate1.setTimestampUtc(29889);
+        heartRate1.setTimestampUtc(29889L);
         heartRate1.setTimestampMs(29889);
         heartRate1.setPico(pico);
         heartRate1.setMovesense(movesense);
@@ -46,7 +46,7 @@ public class HeartRateRepositoryTest {
 
         HeartRate heartRate2 = new HeartRate();
         heartRate2.setAverageBpm(100);
-        heartRate2.setTimestampUtc(30348);
+        heartRate2.setTimestampUtc(30348L);
         heartRate2.setTimestampMs(30348);
         heartRate2.setPico(pico);
         heartRate2.setMovesense(movesense);
@@ -62,7 +62,7 @@ public class HeartRateRepositoryTest {
         assertEquals("e66130100f8c9928", heartRate1.getPico().getId(), "Incorrect picoId");
         assertEquals(174630000192L, heartRate1.getMovesense().getId(), "Incorrect movesenseId");
         assertEquals(108.7813, heartRate1.getAverageBpm(), "Incorrect averageBpm");
-        assertEquals(29889, heartRate1.getTimestampUtc(), "Incorrect timestampUtc");
+        assertEquals(29889L, heartRate1.getTimestampUtc(), "Incorrect timestampUtc");
         assertEquals(29889, heartRate1.getTimestampMs(), "Incorrect timestampMs");
 
         assertEquals(100, heartRate2.getAverageBpm(), "Incorrect averageBpm");
@@ -74,16 +74,16 @@ public class HeartRateRepositoryTest {
     public void findByTimestampUtcBetweenTest() {
         List<HeartRate> heartRateList;
 
-        heartRateList = heartRateRepository.findByTimestampUtcBetween(29890, 30347);
+        heartRateList = heartRateRepository.findByTimestampUtcBetween(29890L, 30347L);
         assertEquals(0, heartRateList.size(), "Incorrect amount of heart rate objects was found");
 
-        heartRateList = heartRateRepository.findByTimestampUtcBetween(29889, 30347);
+        heartRateList = heartRateRepository.findByTimestampUtcBetween(29889L, 30347L);
         assertEquals(1, heartRateList.size(), "Incorrect amount of heart rate objects was found");
 
-        heartRateList = heartRateRepository.findByTimestampUtcBetween(29890, 30348);
+        heartRateList = heartRateRepository.findByTimestampUtcBetween(29890L, 30348L);
         assertEquals(1, heartRateList.size(), "Incorrect amount of heart rate objects was found");
 
-        heartRateList = heartRateRepository.findByTimestampUtcBetween(29889, 30348);
+        heartRateList = heartRateRepository.findByTimestampUtcBetween(29889L, 30348L);
         assertEquals(2, heartRateList.size(), "Incorrect amount of heart rate objects was found");
     }
 }

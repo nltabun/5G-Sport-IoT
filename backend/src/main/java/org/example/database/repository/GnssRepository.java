@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GnssRepository extends CrudRepository<Gnss, Long> {
     Gnss findById(long id);
-    List<Gnss> findByTimestampUtcBetween(int start, int end);
+    List<Gnss> findByTimestampUtcBetween(Long start, Long end);
 }
