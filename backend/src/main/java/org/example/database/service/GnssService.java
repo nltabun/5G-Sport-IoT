@@ -47,9 +47,7 @@ public class GnssService {
     }
 
     private void saveGnssData(Gnss gnss) {
-        gnssRepository.saveAll(gnss);
-        LOGGER.info("Saved {} GNSS samples", gnss.size());
-        // gnssRepository.save(gnss);
-        // LOGGER.info("GNSS data saved to database = '{}'", gnss);
+        gnssRepository.save(gnss);
+        LOGGER.info("GNSS data saved to database = '{}'", gnss);
     }
 }

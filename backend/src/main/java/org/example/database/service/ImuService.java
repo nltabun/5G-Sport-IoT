@@ -82,11 +82,9 @@ public class ImuService {
     }
 
     private void saveIMUCoordinates(List<ImuCoordinate> coordinates) {
-        imuCoordinateRepository.saveAll(coordinate);
-        LOGGER.info("Saved {} IMU samples", coordinate.size());
-        // for (ImuCoordinate coordinate : coordinates) {
-        //     imuCoordinateRepository.save(coordinate);
-        //     LOGGER.info("IMU coordinate saved to database = '{}'", coordinate);
-        // }
+        for (ImuCoordinate coordinate : coordinates) {
+            imuCoordinateRepository.save(coordinate);
+            LOGGER.info("IMU coordinate saved to database = '{}'", coordinate);
+        }
     }
 }
