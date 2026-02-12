@@ -19,7 +19,9 @@ public class MovesenseService {
     }
 
     public void save(Movesense movesense) {
-        movesenseRepository.save(movesense);
-        LOGGER.info("Movesense saved to database = '{}'", movesense.getId());
+        movesenseRepository.saveAll(movesense);
+        LOGGER.info("Saved {} MOVESENSE samples", movesense.size());
+        // movesenseRepository.save(movesense);
+        // LOGGER.info("Movesense saved to database = '{}'", movesense.getId());
     }
 }
