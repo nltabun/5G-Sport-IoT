@@ -82,11 +82,9 @@ public class EcgService {
     }
 
     public void saveEcgSamples(List<EcgSample> samples) {
-        ecgSampleRepository.saveAll(sample);
-        LOGGER.info("Saved {} ECG samples", sample.size());
-        // for (EcgSample sample : samples) {
-        //     ecgSampleRepository.save(sample);
-        //     LOGGER.info("ECG sample saved to database = '{}'", sample);
-        // }
+        for (EcgSample sample : samples) {
+            ecgSampleRepository.save(sample);
+            LOGGER.info("ECG sample saved to database = '{}'", sample);
+        }
     }
 }
