@@ -10,12 +10,12 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class GnssRepositoryTest {
-
     @Autowired
     private PicoRepository picoRepository;
 
@@ -49,9 +49,9 @@ public class GnssRepositoryTest {
 
     @Test
     public void findByIdTest() {
-        Gnss gnss1 = gnssRepository.findById(1L);
-        Gnss gnss2 = gnssRepository.findById(2L);
-        Gnss gnss3 = gnssRepository.findById(3L);
+        Gnss gnss1 = gnssRepository.findById(1);
+        Gnss gnss2 = gnssRepository.findById(2);
+        Gnss gnss3 = gnssRepository.findById(3);
 
         assertEquals("e66130100f8c9928", gnss1.getPico().getId(), "Incorrect picoId");
         assertEquals(37.7749, gnss1.getLatitude(), "Incorrect latitude");
