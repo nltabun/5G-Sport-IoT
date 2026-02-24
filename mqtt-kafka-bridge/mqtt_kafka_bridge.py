@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 from kafka import KafkaProducer
 
 # MQTT Config
-MQTT_BROKER = ""
+MQTT_BROKER = "127.0.0.1"
 MQTT_PORT = 1883
 MQTT_TOPICS = [
     ("sensors/hr", 0),
@@ -18,7 +18,7 @@ MQTT_TOPICS = [
 #CA_CERT_PATH = ""
 
 # Kafka Config
-KAFKA_BROKER = ""
+KAFKA_BROKER = "127.0.0.1:9092"
 
 # Kafka producer setup
 producer = KafkaProducer(
