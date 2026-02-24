@@ -1,0 +1,24 @@
+spring.application.name=5G-Sport-Backend
+spring.kafka.bootstrap-servers=localhost:9092
+spring.kafka.group-id.websocket=5G-Sport-Websocket
+spring.kafka.group-id.database=5G-Sport-Database
+spring.kafka.topics=sensors.imu,sensors.ecg,sensors.hr,sensors.gnss
+spring.kafka.consumer.auto-offset-reset=earliest
+spring.datasource.url=jdbc:postgresql://localhost:5432/sensor_data
+spring.datasource.username=postgres
+spring.datasource.password=mysecretpassword
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+database.enabled=true
+
+
+#Testing
+
+# Hibernate batching
+spring.jpa.properties.hibernate.jdbc.batch_size=500
+spring.jpa.properties.hibernate.order_inserts=true
+spring.jpa.properties.hibernate.order_updates=true
+spring.jpa.properties.hibernate.jdbc.batch_versioned_data=true
+
+
+# Postgres driver optimization for batching
+spring.datasource.url=jdbc:postgresql://localhost:5432/sensor_data?reWriteBatchedInserts=true
