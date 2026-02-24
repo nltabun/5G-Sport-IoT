@@ -6,7 +6,7 @@ spring.kafka.topics=sensors.imu,sensors.ecg,sensors.hr,sensors.gnss
 spring.kafka.consumer.auto-offset-reset=earliest
 spring.datasource.url=jdbc:postgresql://localhost:5432/sensor_data
 spring.datasource.username=postgres
-spring.datasource.password=mysecretpassword
+spring.datasource.password=
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 database.enabled=true
 
