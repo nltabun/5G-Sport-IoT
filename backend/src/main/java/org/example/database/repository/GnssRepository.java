@@ -1,11 +1,27 @@
+// package org.example.database.repository;
+
+// import org.example.database.entity.Gnss;
+// import org.springframework.data.repository.CrudRepository;
+
+// import java.util.List;
+
+// public interface GnssRepository extends CrudRepository<Gnss, Long> {
+//     Gnss findById(long id);
+//     List<Gnss> findByTimestampUtcBetween(Long start, Long end);
+// }
+
 package org.example.database.repository;
 
 import org.example.database.entity.Gnss;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface GnssRepository extends CrudRepository<Gnss, Long> {
-    Gnss findById(long id);
+@Repository
+public interface GnssRepository extends JpaRepository<Gnss, Long> {
+
     List<Gnss> findByTimestampUtcBetween(Long start, Long end);
+    List<Gnss> findByTimestampUtcBetween(long start, long end);
+    Gnss findById(long id);
 }
