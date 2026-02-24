@@ -104,8 +104,6 @@ public class HeartRateServiceTest {
         when(movesenseService.existsInDatabase(any())).thenReturn(true);
 
         heartRateService.handleJson(json);
-
-        // force batch flush
         heartRateService.flushRrBufferOnTimer();
 
         verify(rrDataRepository, times(1)).saveAll(anyList());

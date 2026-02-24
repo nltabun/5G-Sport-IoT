@@ -104,8 +104,6 @@ public class EcgServiceTest {
         when(movesenseService.existsInDatabase(any())).thenReturn(true);
 
         ecgService.handleJson(json);
-
-        // force batch flush
         ecgService.flushSampleBufferOnTimer();
 
         verify(ecgSampleRepository, times(1)).saveAll(anyList());

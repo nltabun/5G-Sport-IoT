@@ -104,8 +104,6 @@ public class ImuServiceTest {
         when(movesenseService.existsInDatabase(any())).thenReturn(true);
 
         imuService.handleJson(json);
-
-        // force batch flush
         imuService.flushCoordinateBufferOnTimer();
 
         verify(imuCoordinateRepository, times(1)).saveAll(anyList());
