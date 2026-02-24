@@ -41,7 +41,7 @@ public class DatabaseKafkaConsumer {
 
     @KafkaListener(topics = "#{'${spring.kafka.topics}'.split(',')}", groupId = "${spring.kafka.group-id.database}")
     public void consume(String message, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) throws IOException {
-        LOGGER.info("Received message from topic '{}', payload = '{}'", topic, message);
+        //LOGGER.info("Received message from topic '{}', payload = '{}'", topic, message);
 
         if (databaseEnabled) {
             saveToDatabase(message, topic);

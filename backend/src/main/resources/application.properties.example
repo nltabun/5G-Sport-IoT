@@ -9,3 +9,16 @@ spring.datasource.username=postgres
 spring.datasource.password=mysecretpassword
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 database.enabled=true
+
+
+#Testing
+
+# Hibernate batching
+spring.jpa.properties.hibernate.jdbc.batch_size=500
+spring.jpa.properties.hibernate.order_inserts=true
+spring.jpa.properties.hibernate.order_updates=true
+spring.jpa.properties.hibernate.jdbc.batch_versioned_data=true
+
+
+# Postgres driver optimization for batching
+spring.datasource.url=jdbc:postgresql://localhost:5432/sensor_data?reWriteBatchedInserts=true

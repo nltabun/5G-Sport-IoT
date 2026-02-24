@@ -1,11 +1,16 @@
 package org.example.database.repository;
 
 import org.example.database.entity.Imu;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ImuRepository extends CrudRepository<Imu, Long> {
+@Repository
+public interface ImuRepository extends JpaRepository<Imu, Long> {
+
     Imu findById(long id);
+
     List<Imu> findByTimestampUtcBetween(Long start, Long end);
+
 }
