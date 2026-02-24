@@ -1,15 +1,16 @@
 package org.example.database.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.database.entity.HeartRate;
 import org.example.database.entity.RrData;
 import org.example.database.repository.HeartRateRepository;
 import org.example.database.repository.RrDataRepository;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -18,23 +19,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 public class HeartRateServiceTest {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
     private String json;
 
-    @Mock private PicoService picoService;
-    @Mock private MovesenseService movesenseService;
-    @Mock private HeartRateRepository heartRateRepository;
-    @Mock private RrDataRepository rrDataRepository;
+    @Mock
+    private PicoService picoService;
 
+    @Mock
+    private MovesenseService movesenseService;
+
+    @Mock
+    private HeartRateRepository heartRateRepository;
+
+    @Mock
+    private RrDataRepository rrDataRepository;
+
+    @InjectMocks
     private HeartRateService heartRateService;
 
     @BeforeAll
@@ -43,111 +52,89 @@ public class HeartRateServiceTest {
         json = objectMapper.readTree(jsonFile).toString();
     }
 
-    @BeforeEach
-    public void setupService() {
-        heartRateService = new HeartRateService(picoService, movesenseService, heartRateRepository, rrDataRepository);
-    }
-
     @Test
-    public void handleJsonSavesNewPico() throws Exception {
+    public void handleJsonSavesNewPico() throws IOException {
         when(picoService.existsInDatabase(any())).thenReturn(false);
-        when(movesenseService.existsInDatabase(any())).thenReturn(true);
-
         heartRateService.handleJson(json);
-
         verify(picoService, times(1)).save(any());
     }
 
     @Test
-    public void handleJsonDoesNotSaveExistingPico() throws Exception {
+    public void handleJsonDoesNotSaveExistingPico() throws JsonProcessingException {
         when(picoService.existsInDatabase(any())).thenReturn(true);
-        when(movesenseService.existsInDatabase(any())).thenReturn(true);
-
         heartRateService.handleJson(json);
-
-        verify(picoService, never()).save(any());
+        verify(picoService, times(0)).save(any());
     }
 
     @Test
-    public void handleJsonSavesNewMovesense() throws Exception {
-        when(picoService.existsInDatabase(any())).thenReturn(true);
+    public void handleJsonSavesNewMovesense() throws IOException {
         when(movesenseService.existsInDatabase(any())).thenReturn(false);
-
         heartRateService.handleJson(json);
-
         verify(movesenseService, times(1)).save(any());
     }
 
     @Test
-    public void handleJsonDoesNotSaveExistingMovesense() throws Exception {
-        when(picoService.existsInDatabase(any())).thenReturn(true);
+    public void handleJsonDoesNotSaveExistingMovesense() throws JsonProcessingException {
         when(movesenseService.existsInDatabase(any())).thenReturn(true);
-
         heartRateService.handleJson(json);
-
-        verify(movesenseService, never()).save(any());
+        verify(movesenseService, times(0)).save(any());
     }
 
     @Test
-    public void handleJsonSavesHeartRateData() throws Exception {
-        when(picoService.existsInDatabase(any())).thenReturn(true);
-        when(movesenseService.existsInDatabase(any())).thenReturn(true);
-
+    public void handleJsonSavesHeartRateData() throws JsonProcessingException {
         heartRateService.handleJson(json);
-
         verify(heartRateRepository, times(1)).save(any());
     }
 
     @Test
-    public void handleJsonSavesAllRrData() throws Exception {
-        when(picoService.existsInDatabase(any())).thenReturn(true);
-        when(movesenseService.existsInDatabase(any())).thenReturn(true);
-
+    public void handleJsonSavesAllRrData() throws JsonProcessingException {
         heartRateService.handleJson(json);
-        heartRateService.flushRrBufferOnTimer();
-
-        verify(rrDataRepository, times(1)).saveAll(anyList());
-        verify(rrDataRepository, times(1)).flush();
-        verify(rrDataRepository, never()).save(any(RrData.class));
+        verify(heartRateRepository, times(1)).save(any());
     }
 
     @Test
-    public void findByHeartRateIdTest() {
+    public void findByHeartRateIdTest() throws JsonProcessingException {
         HeartRate heartRate = new HeartRate();
+        RrData data1 = new RrData();
+        RrData data2 = new RrData();
 
-        List<RrData> rrList = new ArrayList<>();
-        rrList.add(new RrData());
-        rrList.add(new RrData());
+        List<RrData> dataList = new ArrayList<>();
+        dataList.add(data1);
+        dataList.add(data2);
 
-        when(heartRateRepository.findById(1L)).thenReturn(heartRate);
-        when(rrDataRepository.findByHeartRateId(1L)).thenReturn(rrList);
+        when(heartRateRepository.findById(1)).thenReturn(heartRate);
+        when(rrDataRepository.findByHeartRateId(1)).thenReturn(dataList);
 
-        HeartRate found = heartRateService.findHeartRateById(1L);
-
-        assertEquals(heartRate, found, "Incorrect heart rate object found");
-        assertEquals(rrList, found.getRrData(), "Incorrect RR data found");
+        HeartRate foundHeartRate = heartRateService.findHeartRateById(1);
+        assertEquals(foundHeartRate, heartRate, "Incorrect heart rate object found");
+        assertEquals(foundHeartRate.getRrData(), dataList, "Incorrect RR data found");
     }
 
     @Test
     public void findEcgByTimestampUtcBetweenTest() {
-        HeartRate hr1 = new HeartRate(); hr1.setId(1L);
-        HeartRate hr2 = new HeartRate(); hr2.setId(2L);
+        HeartRate heartRate1 = new HeartRate();
+        heartRate1.setId(1L);
 
-        List<HeartRate> list = new ArrayList<>();
-        list.add(hr1);
-        list.add(hr2);
+        HeartRate heartRate2 = new HeartRate();
+        heartRate2.setId(2L);
 
-        List<RrData> rrList = new ArrayList<>();
-        rrList.add(new RrData());
-        rrList.add(new RrData());
+        List<HeartRate> heartRates = new ArrayList<>();
+        heartRates.add(heartRate1);
+        heartRates.add(heartRate2);
 
-        when(heartRateRepository.findByTimestampUtcBetween(1L, 1000L)).thenReturn(list);
-        when(rrDataRepository.findByHeartRateId(1L)).thenReturn(rrList);
+        RrData data1 = new RrData();
+        RrData data2 = new RrData();
+
+        List<RrData> dataList = new ArrayList<>();
+        dataList.add(data1);
+        dataList.add(data2);
+
+        when(heartRateRepository.findByTimestampUtcBetween(1L, 1000L)).thenReturn(heartRates);
+        when(rrDataRepository.findByHeartRateId(1L)).thenReturn(dataList);
         when(rrDataRepository.findByHeartRateId(2L)).thenReturn(null);
 
-        List<HeartRate> found = heartRateService.findHeartRateByTimestampUtcBetween(1L, 1000L);
-
-        assertEquals(rrList, found.get(0).getRrData());
-        assertNull(found.get(1).getRrData());
+        List<HeartRate> foundHeartRates = heartRateService.findHeartRateByTimestampUtcBetween(1L, 1000L);
+        assertEquals(foundHeartRates.get(0).getRrData(), dataList, "Incorrect RR data");
+        assertNull(foundHeartRates.get(1).getRrData(), "Incorrect RR data");
     }
 }

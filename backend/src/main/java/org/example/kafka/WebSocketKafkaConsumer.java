@@ -29,7 +29,7 @@ public class WebSocketKafkaConsumer {
 
     @KafkaListener(topics = "#{'${spring.kafka.topics}'.split(',')}", groupId = "${spring.kafka.group-id.websocket}")
     public void consume(String message, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) throws IOException {
-        //LOGGER.info("Received message from topic '{}', payload = '{}'", topic, message);
+        LOGGER.info("Received message from topic '{}', payload = '{}'", topic, message);
 
         broadcast(message, topic);
 
